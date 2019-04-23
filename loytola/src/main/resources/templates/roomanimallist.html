@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Animallist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+		<div class="col-sm-4">
+			<h3>Sijoituspaikan <spin th:text="${room.name}"></spin> eläinten lista</h3>
+		</div>
+		<div class="col-sm-4">
+			<button class="btn btn-sm btn-success" onclick="javascript:history.back()">Takaisin</button>
+		</div>
+		<div class="col-sm-4" style="padding:20px 0" >
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Kirjaudu ulos" class="btn btn-sm btn-danger"/>
+			</form>
+		</div>
+	</div>
+    <table class="table table-bordered">
+		<tr>
+		    <th>Tunnus</th>
+		    <th>Eläin tyyppi<th>
+		    <th>Rotu</th>
+		    <th>Sukupuoli</th>
+		    <th>Kuvaus</th>
+		    <th>Löytöpäivä</th>
+		    <th>Sijoituspaikka</th>
+		    <th>Lähtöpäivä</th>
+		    <th>Lähdön syy</th>
+		    <th sec:authorize="hasAuthority('ADMIN')">Poista</th>
+		    <th sec:authorize="hasAuthority('ADMIN')">Muokata</th>
+		</tr>  
+    	<tr th:each = "animal : ${animals}">
+    		<td th:text="${animal.name}"></td>
+    		<td th:text="${animal.animalKind.name}"></td>
+    		<td th:text="${animal.breed.name}"></td>
+    		<td th:text="${animal.sex.name}"></td>
+    		<td th:text="${animal.description}"></td>
+    		<td th:text="${animal.foundDate}"></td>
+    		<td th:text="${animal.room.name}"></td>
+    		<td><span th:if="${animal.departureDate!=null}" th:text="${animal.departureDate}"></span></td>
+    		<td><span th:if="${animal.departureCause!=null}"  th:text="${animal.departureCause.name}"></td>
+ 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/deleteanimal/{id}(id=${animal.animalId})}" class="btn btn-danger">Poista</button></td>   
+ 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editanimal/{id}(id=${animal.animalId})}" class="btn btn-success">Muokkaa</button></td>  
+ 			 		
+    	</tr>
+     </table>
+     <br />
+	<p sec:authorize="hasAuthority('ADMIN')"><button class="btn btn-success" OnClick="location.href='/addanimal'">Lisää eläin</button>	
+	</div>	
+</body>
+</html>

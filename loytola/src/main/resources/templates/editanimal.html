@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New animal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ 	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+
+</head>
+<body>
+	<h1 class="jumbotron text-center text-primary">Lisää uusi eläin</h1>
+	<div class="container text-left">
+		<form th:object="${animal}" th:action="@{/saveanimal}" action="#" method="post">
+		  	<label for="name">Eläinten tunnus</label>
+			<input type="text" id="name" size="30px" th:field="*{name}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="animalKindlist">Eläimen tyyppi</label>
+			<select id="animalKindlist" th:field="*{animalKind}" class="form-control" style="width:300px;">
+       		<option th:each="animalKind: ${animalKinds}" th:value="${animalKind.animalKindId}" th:text="${animalKind.name}"></option>
+    		</select>
+			<div  style="clear: both; display: block; height: 10px;"></div>
+			<label for="breed">Rotu</label>
+			<select id="breed" th:field="*{breed}" class="form-control" style="width:300px;">
+       		<option th:each="breed: ${breeds}" th:value="${breed.breedId}" th:text="${breed.name}"></option>
+    		</select>
+			<div  style="clear: both; display: block; height: 10px;"></div>
+			<label for="sexlist">Sukupuoli</label>
+			<select id="sex" th:field="*{sex}" class="form-control" style="width:300px;">
+       		<option th:each="sex: ${sexs}" th:value="${sex.sexId}" th:text="${sex.name}"></option>
+    		</select>
+			<div  style="clear: both; display: block; height: 10px;"></div>
+			<label for="descriptiot">Kuvaus</label>
+			<textarea cols ="30" rows="3" id="description" size="30px" th:field="*{description}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="foundDate">Löytöpäivä</label>
+			<input type="datetime" th:field="*{foundDate}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="roomlist">Sijoituspaikka</label>
+			<select id="roomlist" th:field="*{room}" class="form-control" style="width:300px;">
+       		<option th:each="room: ${rooms}" th:value="${room.roomId}" th:text="${room.name}"></option>
+    		</select>
+			<div  style="clear: both; display: block; height: 10px;"></div>
+			<input class="btn btn-success" id="button" type="submit" value="Tallenna" ></input>
+		</form>
+	</div>
+</body>
+</html>

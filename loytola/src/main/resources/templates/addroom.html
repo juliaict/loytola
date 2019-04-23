@@ -1,0 +1,36 @@
+<DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Uusi sjoituspaikka</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+
+<body>
+	<h1 class="jumbotron text-center text-primary">Lisää uusi sijoituspaikka</h1>
+	<div class="container text-center">
+		<form th:object="${room}" th:action="@{save}" action="#" method="post">
+		  	<label for="name">Paikan nimi</label>
+			<input type="text" required id="name" size="30px" th:field="*{name}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="capacity">Tilavuus</label>
+			<input type="number" min="0" id="capacity" size="30px" th:field="*{capacity}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="free">Vapaita paikkoja</label>
+			<input type="number" min="0" id="free" th:field="*{free}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="roomKindlist">Paikan tyyppi</label>
+			<select id="roomKindlist" th:field="*{roomKind}" class="form-control" style="width:300px; display: block; align: center;">
+       		<option th:each="roomKind: ${roomKinds}" th:value="${roomKind.roomKindId}" th:text="${roomKind.name}"></option>
+    		</select>
+			<div  style="clear: both; display: block; height: 10px;"></div>
+			<input class="btn btn-success" id="button" type="submit" value="Tallenna" ></input>
+		</form>
+	</div>
+	<script type="text/javascript">
+      capacity.addEventListener('input', function () {
+        free.value = (this.value );
+        free.max=(this.value);
+      });
+    </script>
+</body>
+</html>
